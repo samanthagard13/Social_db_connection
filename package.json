@@ -1,0 +1,11 @@
+{
+  "name": "18-",
+  "version": "1.0.0",
+  "description": "## Your Task",
+  "main": "index.js",
+  "scripts": {
+    "test": "node server.js"
+  },
+  "author": "",
+  "license": "MIT"
+}
