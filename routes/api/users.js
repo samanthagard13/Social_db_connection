@@ -64,5 +64,35 @@ router.get('/users', async (req, res) => {
       res.status(500).json({ message: 'Internal Server Error' });
     }
   });
+
+  router.post('/api/users/:userId/friends/:friendId', async (req, res) => {
+    try {
+      const { userId, friendId } = req.params;
+      const user = await User.findById(userId);
+      const friend = await User.findById(friendId);
+      user.friends.push(friendId);
+      await user.save();
+  
+      res.json({ message: 'Friend added successfully' });
+    } catch (err) {
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
+  
+
+  router.delete('/api/users/:userId/friends/:friendId', async (req, res) => {
+    try {
+      const { userId, friendId } = req.params;
+      const user = await User.findById(userId);
+
+      const friendIndex = user.friends.indexOf(friendId);
+
+      user.friends.splice(friendIndex, 1);
+      await user.save();
+      res.json({ message: 'Friend removed successfully' });
+    } catch (err) {
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  });
   
   module.exports = router;
