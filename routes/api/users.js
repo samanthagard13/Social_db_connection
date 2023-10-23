@@ -65,7 +65,7 @@ router.get('/users', async (req, res) => {
     }
   });
 
-  router.post('/api/users/:userId/friends/:friendId', async (req, res) => {
+  router.post('/users/:userId/friends/:friendId', async (req, res) => {
     try {
       const { userId, friendId } = req.params;
       const user = await User.findById(userId);
@@ -80,7 +80,7 @@ router.get('/users', async (req, res) => {
   });
   
 
-  router.delete('/api/users/:userId/friends/:friendId', async (req, res) => {
+  router.delete('/users/:userId/friends/:friendId', async (req, res) => {
     try {
       const { userId, friendId } = req.params;
       const user = await User.findById(userId);
