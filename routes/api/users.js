@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const { User, Thoughts } = require('../models/');
+const { User } = require('../../models/User');
+const { Thoughts } = require('../../models/Thoughts');
 
 router.get('/users', async (req, res) => {
     try {
@@ -80,7 +81,7 @@ router.get('/users', async (req, res) => {
   });
   
 
-  router.delete('/users/:userId/friends/:friendId', async (req, res) => {
+  router.delete('users/:userId/friends/:friendId', async (req, res) => {
     try {
       const { userId, friendId } = req.params;
       const user = await User.findById(userId);

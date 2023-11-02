@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { User, Thoughts } = require('../models/');
+const { User } = require('../../models/User');
+const { Thoughts } = require('../../models/Thoughts');
 
 router.get('/thoughts', async (req, res) => {
     try {

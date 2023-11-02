@@ -12,7 +12,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        match: '/^\S+@\S+\.\S+$/'
+        match: /^\S+@\S+\.\S+$/
     },
     thoughts: [
         {

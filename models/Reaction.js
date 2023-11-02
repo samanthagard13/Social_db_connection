@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 const reactionSchema = new mongoose.Schema({
   reactionId: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: mongoose.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId
   },
   reactionBody: {
     type: String,
@@ -23,4 +22,6 @@ const reactionSchema = new mongoose.Schema({
   },
 });
 
-module.exports = reactionSchema;
+const Reactions = mongoose.model('Reactions', reactionSchema);
+
+module.exports = Reactions;

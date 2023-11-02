@@ -1,22 +1,5 @@
 const mongoose = require('mongoose');
-
-const reactionSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-  },
-  reactionBody: {
-    type: String,
-    required: true,
-  },
-  reactionDate: {
-    type: Date,
-    default: Date.now,
-    get: function (timestamp) {
-      return new Date(timestamp).toDateString();
-    },
-  },
-});
+const Schema = mongoose.Schema;
 
 const thoughtSchema = new mongoose.Schema({
   thoughtText: {
@@ -36,13 +19,18 @@ const thoughtSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  reactions: [reactionSchema],
+  reactions: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Reaction', 
+    },
+  ],
 });
 
 thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;
 });
 
-const Thought = mongoose.model('Thought', thoughtSchema);
+const Thought = mongoose.model('Thoughts', thoughtSchema);
 
 module.exports = Thought;

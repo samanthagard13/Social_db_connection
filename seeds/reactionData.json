@@ -1,0 +1,12 @@
+[
+    {
+        "reactionBody": "This is great",
+        "username": "lernantino",
+        "createdAt": "2/4/20"
+    },
+    {
+        "reactionBody": "This is horrible",
+        "username": "user1",
+        "createdAt": "2/10/23"
+    }
+]

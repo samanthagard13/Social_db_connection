@@ -1,0 +1,19 @@
+[
+    {
+        "thoughtText": "Here's a cool thought...",
+        "username": "lernantino",
+        "userId": "5edff358a0fcb779aa7b118b"
+      },
+      {
+        "thoughtText": "This is the first thought.",
+        "username": "user1"
+      },
+      {
+        "thoughtText": "Another thought here.",
+        "username": "user2"
+      },
+      {
+        "thoughtText": "A third thought.",
+        "username": "user3"
+      }
+]
