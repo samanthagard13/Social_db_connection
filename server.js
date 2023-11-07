@@ -1,13 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const router = express.Router();
+const routes = require('./routes/index');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/socials_db', {
+mongoose.connect('mongodb://127.0.0.1:27017/socials_db', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -18,6 +18,10 @@ db.on('error', (error) => {
   console.error('MongoDB connection error:', error);
 });
 
+app.get('/test', (req, res) => {
+  res.send("Testing....");
+})
+
 app.get('/data', async (req, res) => {
   try {
     res.json({ message: 'Data from the database' });
@@ -26,6 +30,8 @@ app.get('/data', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
+app.use('/', routes); // we are passing the incoming request
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

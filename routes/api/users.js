@@ -1,19 +1,22 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const { User } = require('../../models/User');
-const { Thoughts } = require('../../models/Thoughts');
+const { User } = require('../../models');
+// const User = require('../../models/User');
+const { Thought } = require('../../models');
 
-router.get('/users', async (req, res) => {
+// this endpoint --> '/api/users'
+router.get('/', async (req, res) => {
     try {
-      const users = await User.findAll();
+      const users = await User.find();
       res.json(users);
     } catch (err) {
+      console.log("Error: ", err);
       res.status(500).json({ message: 'Internal Server Error' });
     }
   });
 
-  router.get('/users/:id', async (req, res) => {
+  router.get('/:id', async (req, res) => {
     try {
       const user = await User.findById(req.params.id)
         .populate('thoughts')
@@ -27,7 +30,7 @@ router.get('/users', async (req, res) => {
     }
   });
 
-  router.post('/users', async (req, res) => {
+  router.post('/', async (req, res) => {
     try {
       const { username, email } = req.body;
       const user = new User({ username, email });
@@ -38,7 +41,7 @@ router.get('/users', async (req, res) => {
     }
   });
 
-  router.put('/users/:id', async (req, res) => {
+  router.put('/:id', async (req, res) => {
     try {
       const { username, email } = req.body;
       const updatedUser = await User.findByIdAndUpdate(req.params.id, { username, email }, { new: true });
@@ -51,22 +54,23 @@ router.get('/users', async (req, res) => {
     }
   });
 
-  router.delete('/users/:id', async (req, res) => {
+  router.delete('/:id', async (req, res) => {
     try {
-      const deletedUser = await User.findByIdAndDelete(req.params.id);
+      const deletedUser = await User.findByIdAndDelete({ _id: req.params.id });
       if (!deletedUser) {
         return res.status(404).json({ message: 'User not found' });
       } 
       
-      await Thoughts.deleteMany({ username: deletedUser.username });
+      await Thought.deleteMany({ username: deletedUser.username });
     
       res.json({ message: 'User and associated thoughts deleted' });
     } catch (err) {
+      console.log("Error: ", err);
       res.status(500).json({ message: 'Internal Server Error' });
     }
   });
 
-  router.post('/users/:userId/friends/:friendId', async (req, res) => {
+  router.post('/:userId/friends/:friendId', async (req, res) => {
     try {
       const { userId, friendId } = req.params;
       const user = await User.findById(userId);
@@ -81,7 +85,7 @@ router.get('/users', async (req, res) => {
   });
   
 
-  router.delete('users/:userId/friends/:friendId', async (req, res) => {
+  router.delete('/:userId/friends/:friendId', async (req, res) => {
     try {
       const { userId, friendId } = req.params;
       const user = await User.findById(userId);

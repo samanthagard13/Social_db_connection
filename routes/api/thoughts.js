@@ -3,7 +3,7 @@ const router = express.Router();
 const { User } = require('../../models/User');
 const { Thoughts } = require('../../models/Thoughts');
 
-router.get('/thoughts', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const thoughts = await Thoughts.find();
         res.json(thoughts);
@@ -12,7 +12,7 @@ router.get('/thoughts', async (req, res) => {
       }
 });
 
-router.get('/thoughts/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
       const thought = await Thoughts.findById(req.params.id);
       if (!thought) {
@@ -24,7 +24,7 @@ router.get('/thoughts/:id', async (req, res) => {
     }
   });
 
-router.post('/thoughts', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { thoughtText, username, userId } = req.body;
 
@@ -42,7 +42,7 @@ router.post('/thoughts', async (req, res) => {
       }
     });
 
-    router.put('/thoughts/:id', async (req, res) => {
+    router.put('/:id', async (req, res) => {
         try {
           const { thoughtText } = req.body;
           const thoughtId = req.params.id;
@@ -59,7 +59,7 @@ router.post('/thoughts', async (req, res) => {
         }
       });
 
-      router.delete('/thoughts/:id', async (req, res) => {
+      router.delete('/:id', async (req, res) => {
         try {
           const thoughtId = req.params.id;
       
@@ -73,7 +73,7 @@ router.post('/thoughts', async (req, res) => {
         }
       });
 
-      router.post('/thoughts/:thoughtId/reactions', async (req, res) => {
+      router.post('/:thoughtId/reactions', async (req, res) => {
         try {
             const { thoughtId } = req.params;
             const { reactionBody, username } = req.body;
@@ -94,7 +94,7 @@ router.post('/thoughts', async (req, res) => {
           });
         
 
-      router.delete('/thoughts/:thoughtId/reactions', async (req, res) => {
+      router.delete('/:thoughtId/reactions', async (req, res) => {
         try {
             const { thoughtId } = req.params;
         
