@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { User } = require('../../models/User');
-const { Thoughts } = require('../../models/Thoughts');
+const { User } = require('../../models');
+const { Thought } = require('../../models');
 
 router.get('/', async (req, res) => {
     try {
-        const thoughts = await Thoughts.find();
+        const thoughts = await Thought.find();
         res.json(thoughts);
       } catch (err) {
         res.status(500).json({ message: 'Internal Server Error' });
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-      const thought = await Thoughts.findById(req.params.id);
+      const thought = await Thought.findById(req.params.id);
       if (!thought) {
         return res.status(404).json({ message: 'Thought not found' });
       }
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
 
         const user = await User.findById(userId);
 
-        const thought = new Thoughts({ thoughtText, username, userId });
+        const thought = new Thought({ thoughtText, username, userId });
         await thought.save();
 
         user.thoughts.push(thought._id);
@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
           const { thoughtText } = req.body;
           const thoughtId = req.params.id;
       
-          const thought = await Thoughts.findByIdAndUpdate(thoughtId, { thoughtText }, { new: true });
+          const thought = await Thought.findByIdAndUpdate(thoughtId, { thoughtText }, { new: true });
       
           if (!thought) {
             return res.status(404).json({ message: 'Thought not found' });
@@ -63,7 +63,7 @@ router.post('/', async (req, res) => {
         try {
           const thoughtId = req.params.id;
       
-          const thought = await Thoughts.findByIdAndDelete(thoughtId);
+          const thought = await Thought.findByIdAndDelete(thoughtId);
 
           await User.findByIdAndUpdate(thought.userId, { $pull: { thoughts: thoughtId } });
 
@@ -78,7 +78,7 @@ router.post('/', async (req, res) => {
             const { thoughtId } = req.params;
             const { reactionBody, username } = req.body;
         
-            const thought = await Thoughts.findById(thoughtId);
+            const thought = await Thought.findById(thoughtId);
             const newReaction = {
                 reactionBody,
                 username,
@@ -98,7 +98,7 @@ router.post('/', async (req, res) => {
         try {
             const { thoughtId } = req.params;
         
-            const thought = await Thoughts.findByIdAndUpdate(thoughtId, { reactions: [] }, { new: true });
+            const thought = await Thought.findByIdAndUpdate(thoughtId, { reactions: [] }, { new: true });
         
             if (!thought) {
               return res.status(404).json({ message: 'Thought not found' });
