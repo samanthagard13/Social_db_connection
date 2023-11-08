@@ -21,6 +21,8 @@
 
   Check data and make changes to the database using Insomnia.
 
+  ![Screenshot](./Assets/Screenshot%202023-11-07%20202836.png)
+
   ## License
 
   MIT License
